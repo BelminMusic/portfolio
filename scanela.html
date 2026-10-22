@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scanela — Belmin Music</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg:        #FFFFFF;
+    --ink:       #0E0E0C;
+    --ink-dim:   #75756E;
+    --line:      #ECECE6;
+
+    --blue:      #315CFF;
+    --blue-soft: #EAEEFF;
+    --coral:     #FF5A3C;
+    --coral-soft:#FFEBE5;
+    --yellow:    #FFC700;
+    --yellow-soft:#FFF6D9;
+
+    --display: 'Clash Display', 'Satoshi', sans-serif;
+    --body:    'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono:    'JetBrains Mono', monospace;
+
+    --max-w: 1160px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
+
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--body);
+    font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--yellow); color:var(--ink); }
+  :focus-visible{ outline:2px solid var(--blue); outline-offset:3px; border-radius:2px; }
+
+  .wrap{ max-width:var(--max-w); margin:0 auto; padding:0 32px; }
+
+  .mark{ display:inline-flex; align-items:flex-end; gap:3px; height:16px; width:15px; flex-shrink:0; }
+  .mark span{ display:block; width:3px; border-radius:1px; animation:pulse 1.5s ease-in-out infinite; }
+  .mark span:nth-child(1){ height:40%; background:var(--blue); animation-delay:0s; }
+  .mark span:nth-child(2){ height:100%; background:var(--coral); animation-delay:.2s; }
+  .mark span:nth-child(3){ height:65%; background:var(--yellow); animation-delay:.4s; }
+  .mark span:nth-child(4){ height:85%; background:var(--blue); animation-delay:.1s; }
+  @keyframes pulse{ 0%,100%{ transform:scaleY(.45); } 50%{ transform:scaleY(1); } }
+
+  header{ position:sticky; top:0; background:rgba(255,255,255,0.85); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); z-index:10; }
+  nav.wrap{ display:flex; align-items:center; justify-content:space-between; height:76px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:600; font-size:17px; letter-spacing:-0.01em; }
+  .back-link{
+    font-size:14px; font-weight:600; color:var(--ink-dim); display:inline-flex; align-items:center; gap:8px;
+    transition:color .15s ease, gap .15s ease;
+  }
+  .back-link:hover{ color:var(--blue); gap:11px; }
+
+  .p-hero{ padding:72px 0 48px; }
+  .p-eyebrow{
+    font-family:var(--mono); font-size:13px; color:var(--blue); text-transform:uppercase;
+    letter-spacing:.08em; margin-bottom:18px;
+  }
+  .p-title{
+    font-family:var(--display); font-weight:700; font-size:clamp(38px, 6vw, 64px);
+    letter-spacing:-0.02em; max-width:16ch; margin-bottom:24px;
+  }
+  .p-lead{ font-size:19px; line-height:1.6; color:var(--ink-dim); max-width:60ch; }
+
+  .p-meta{
+    display:flex; gap:40px; flex-wrap:wrap; margin-top:40px; padding-top:32px; border-top:1px solid var(--line);
+  }
+  .p-meta-item{ display:flex; flex-direction:column; gap:6px; }
+  .p-meta-label{ font-family:var(--mono); font-size:11.5px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.06em; }
+  .p-meta-val{ font-family:var(--display); font-weight:600; font-size:16px; }
+
+  .p-image{
+    margin:56px 0; border-radius:20px; overflow:hidden; border:1px solid var(--line);
+    background:var(--blue-soft); aspect-ratio:16/9; display:flex; align-items:center; justify-content:center;
+  }
+  .p-image img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* phone-mockup variant — for tall screenshot images like app screens */
+  .p-image.phone{
+    aspect-ratio: 1419/2796;
+    max-width: 240px;
+    margin-left: auto;
+    margin-right: auto;
+    background: transparent;
+    border: none;
+  }
+  .p-image.phone img{ object-fit: contain; }
+
+  /* wide variant — for website / marketing screenshots (not phone mockups) */
+  .p-image.wide{ aspect-ratio:16/10; max-width:100%; width:500px; margin:0; }
+
+  .p-section{ padding:56px 0; border-top:1px solid var(--line); }
+  .p-section-title{ font-family:var(--display); font-weight:600; font-size:clamp(24px, 3.5vw, 32px); letter-spacing:-0.01em; margin-bottom:24px; }
+  .p-section-sub{ font-size:16px; color:var(--ink-dim); max-width:64ch; margin-top:-12px; margin-bottom:32px; }
+  .p-section p{ font-size:17px; line-height:1.7; color:var(--ink-dim); max-width:64ch; }
+  .p-section p + p{ margin-top:18px; }
+
+  .p-tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top:20px; }
+  .tag{ font-family:var(--mono); font-size:12px; color:var(--ink-dim); border:1px solid var(--line); padding:5px 12px; border-radius:999px; }
+
+  /* TASKS — the different roles/responsibilities */
+  .p-tasks{ display:flex; flex-direction:column; gap:1px; background:var(--line); border-radius:20px; overflow:hidden; border:1px solid var(--line); }
+  .p-task{ background:#fff; padding:32px; display:grid; grid-template-columns:120px 1fr; gap:24px; }
+  @media (max-width:700px){ .p-task{ grid-template-columns:1fr; gap:12px; } }
+  .p-task-tag{ font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; padding-top:4px; }
+  .p-task:nth-child(1) .p-task-tag{ color:var(--blue); }
+  .p-task:nth-child(2) .p-task-tag{ color:var(--coral); }
+  .p-task:nth-child(3) .p-task-tag{ color:#B8860B; }
+  .p-task:nth-child(4) .p-task-tag{ color:var(--blue); }
+  .p-task:nth-child(5) .p-task-tag{ color:var(--coral); }
+  .p-task-title{ font-family:var(--display); font-weight:600; font-size:20px; margin-bottom:8px; }
+  .p-task-desc{ font-size:15.5px; line-height:1.65; color:var(--ink-dim); max-width:56ch; }
+
+  /* GALLERY — screenshots, including phone mockups */
+  .p-gallery{ display:flex; flex-wrap:wrap; gap:32px; justify-content:center; }
+  .p-gallery-item{ display:flex; flex-direction:column; align-items:center; }
+  .p-gallery-caption{ font-family:var(--mono); font-size:12px; color:var(--ink-dim); margin-top:10px; display:block; text-align:center; }
+
+  /* App Store badge */
+  .appstore-badge{
+    display:inline-flex; align-items:center; gap:12px; background:var(--ink); color:#fff;
+    padding:12px 22px; border-radius:14px; transition:transform .15s ease, background .15s ease;
+  }
+  .appstore-badge:hover{ transform:translateY(-2px); background:var(--blue); }
+  .appstore-badge svg{ width:26px; height:26px; flex-shrink:0; }
+  .appstore-badge-sub{ display:block; font-size:11px; color:rgba(255,255,255,.7); }
+  .appstore-badge-main{ display:block; font-family:var(--display); font-weight:600; font-size:18px; letter-spacing:-0.01em; }
+
+  /* Social media links */
+  .social-links{ display:flex; gap:12px; flex-wrap:wrap; }
+  .social-link{
+    display:inline-flex; align-items:center; gap:8px; font-family:var(--display); font-weight:600; font-size:15px;
+    border:1.5px solid var(--ink); padding:12px 22px; border-radius:999px; transition:background .15s ease, color .15s ease, transform .15s ease;
+  }
+  .social-link:hover{ background:var(--blue); border-color:var(--blue); color:#fff; transform:translateY(-2px); }
+
+  .p-steps{ display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; margin-top:8px; }
+  @media (max-width:800px){ .p-steps{ grid-template-columns:1fr; } }
+  .p-step{ padding:28px; border-radius:16px; background:var(--blue-soft); }
+  .p-step:nth-child(2){ background:var(--coral-soft); }
+  .p-step:nth-child(3){ background:var(--yellow-soft); }
+  .p-step-num{ font-family:var(--mono); font-size:12px; color:var(--ink-dim); margin-bottom:10px; display:block; }
+  .p-step-title{ font-family:var(--display); font-weight:600; font-size:18px; margin-bottom:8px; }
+  .p-step-desc{ font-size:14px; line-height:1.55; color:var(--ink-dim); }
+
+  .p-reflection{
+    padding:40px; border-radius:20px; background:var(--ink); color:#fff; margin-top:8px;
+  }
+  .p-reflection p{ font-size:18px; line-height:1.7; color:rgba(255,255,255,0.85); max-width:64ch; }
+  .p-reflection p + p{ margin-top:16px; }
+
+  .p-next{
+    padding:64px 0; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:14px;
+  }
+  .p-next-label{ font-family:var(--mono); font-size:12px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.06em; }
+  .p-next-title{
+    font-family:var(--display); font-weight:600; font-size:clamp(26px, 4vw, 38px); letter-spacing:-0.01em;
+    display:inline-flex; align-items:center; gap:14px; transition:gap .15s ease, color .15s ease;
+  }
+  .p-next-link:hover .p-next-title{ gap:20px; color:var(--blue); }
+
+  .p-footer-nav{ padding:32px 0 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .btn{
+    font-family:var(--body); font-size:15px; font-weight:600; padding:15px 28px; border-radius:999px;
+    border:1.5px solid var(--ink); transition:background .15s ease, color .15s ease, border-color .15s ease, transform .15s ease;
+    display:inline-block;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn.primary{ background:var(--blue); color:#fff; border-color:var(--blue); }
+  .btn.primary:hover{ background:var(--ink); border-color:var(--ink); }
+
+  footer{
+    padding:32px 0 48px; display:flex; justify-content:space-between; align-items:center;
+    font-family:var(--mono); font-size:12px; color:var(--ink-dim); flex-wrap:wrap; gap:12px; border-top:1px solid var(--line);
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="brand">
+      <span class="mark"><span></span><span></span><span></span><span></span></span>
+      Belmin Music
+    </div>
+    <a class="back-link" href="index.html">← Tillbaka till alla projekt</a>
+  </nav>
+</header>
+
+<section class="p-hero wrap">
+  <div class="p-eyebrow">Projekt / AI-app</div>
+  <h1 class="p-title">Scanela <br>AI-app för recept</h1>
+  <p class="p-lead">
+    En AI-app där du fotar dina ingredienser och får receptförslag baserat på vad du redan har hemma.
+  </p>
+
+  <div class="p-meta">
+    <div class="p-meta-item">
+      <span class="p-meta-label">Roll</span>
+      <span class="p-meta-val">Grundare</span>
+    </div>
+    <div class="p-meta-item">
+      <span class="p-meta-label">Verktyg</span>
+      <span class="p-meta-val">Figma, HTML, CSS, JavaScript</span>
+    </div>
+    <div class="p-meta-item">
+      <span class="p-meta-label">Status</span>
+      <span class="p-meta-val">Byggd</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="p-image">
+    <img src="scanela-thumbnail.png" alt="Scanela – AI-app för recept">
+  </div>
+</div>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Utmaningen</h2>
+  <p>
+    De flesta har varit där, kylskåpet är fullt, men inget känns som en måltid. Antingen
+    slänger man ingredienser man aldrig hann använda, eller så handlar man nytt istället
+    för att laga på det som redan finns hemma.
+  </p>
+  <p>
+    De flesta receptappar löser inte det problemet, de förutsätter att du redan vet
+    vad du vill laga och bara söker efter ett recept. Jag ville vända på det och utgå från
+    vad du faktiskt har, inte vad du borde ha.
+  </p>
+  <p>
+    Målet var att ta bort så många steg som möjligt mellan "jag är hungrig" och
+    "jag vet vad jag ska laga". Inga sökningar, inga listor, bara en bild.
+  </p>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Om projektet</h2>
+  <p>
+    Scanela löser problemet genom att låta användaren fota det som finns i kylskåpet.
+    Appen genererar receptförslag som utgår från exakt de ingredienserna, ingen manuell
+    inmatning krävs.
+  </p>
+  <p>
+    Idén bygger lika mycket på ett affärsperspektiv som ett designperspektiv. Appen
+    minskar matsvinn samtidigt som den sänker tröskeln för matlagning. Det är en tydlig
+    nyttoeffekt för användaren, vilket är precis vad jag tror gör ett produktidé värd
+    att faktiskt bygga, inte bara en teknisk övning.
+  </p>
+  <div class="p-tags">
+    <span class="tag">Figma</span>
+    <span class="tag">HTML</span>
+    <span class="tag">CSS</span>
+    <span class="tag">JavaScript</span>
+  </div>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Mina uppgifter</h2>
+  <p class="p-section-sub">Jag ansvarade för hela flödet från idé till färdig produkt — från första konceptet till kod och lansering. Här är vad det innebar i praktiken.</p>
+  <div class="p-tasks">
+    <div class="p-task">
+      <span class="p-task-tag">Research</span>
+      <div>
+        <div class="p-task-title">Problemformulering & konceptutveckling</div>
+        <div class="p-task-desc">
+          Innan jag ritade något undersökte jag varför befintliga receptappar inte
+          löser problemet med "vad ska jag laga med det jag redan har". De flesta
+          kräver att man vet vad man letar efter — jag ville vända på det helt. Det
+          ledde fram till konceptet: en app som utgår från en bild istället för en sökning.
+        </div>
+      </div>
+    </div>
+    <div class="p-task">
+      <span class="p-task-tag">Design</span>
+      <div>
+        <div class="p-task-title">UX & gränssnittsdesign i Figma</div>
+        <div class="p-task-desc">
+          Jag byggde flödet från kamera till receptförslag i Figma — med fokus på
+          att göra det så enkelt som möjligt att gå från foto till färdigt recept på
+          så få skärmar som möjligt. Jag testade flera versioner av flödet innan jag
+          landade i det som kändes mest naturligt att använda.
+        </div>
+      </div>
+    </div>
+    <div class="p-task">
+      <span class="p-task-tag">Utveckling</span>
+      <div>
+        <div class="p-task-title">Frontend i HTML, CSS & JavaScript</div>
+        <div class="p-task-desc">
+          Jag kodade gränssnittet från grunden, inklusive kamerafunktionen, laddningsflödet
+          och hur receptförslagen presenteras för användaren på ett tydligt och lättläst sätt.
+          Allt byggdes själv, utan mall eller färdig komponentbibliotek.
+        </div>
+      </div>
+    </div>
+    <div class="p-task">
+      <span class="p-task-tag">Marknadsföring</span>
+      <div>
+        <div class="p-task-title">Lansering & synlighet</div>
+        <div class="p-task-desc">
+          Utöver produkten ansvarade jag även för att få appen att synas — från att ta
+          fram innehåll som visar hur appen används i praktiken, till att bygga en
+          lanseringsstrategi som förklarar värdet av Scanela på några sekunder. Samma
+          affärstänk som formade produkten formade även hur den skulle nå ut.
+        </div>
+      </div>
+    </div>
+    <div class="p-task">
+      <span class="p-task-tag">Iteration</span>
+      <div>
+        <div class="p-task-title">Testning & förbättring</div>
+        <div class="p-task-desc">
+          Jag testade flödet på riktiga bilder och justerade gränssnittet där det blev
+          otydligt — särskilt kring vad som händer när AI:n är osäker på en ingrediens.
+          Feedback från tidiga användare formade flera av besluten i den slutgiltiga versionen.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Skärmdumpar</h2>
+  <p class="p-section-sub">Ett urval av gränssnittet i telefonformat.</p>
+  <div class="p-gallery">
+    <div class="p-gallery-item">
+      <div class="p-image phone">
+        <img src="scanela.1.png" alt="Scanela – kameraflöde">
+      </div>
+      <span class="p-gallery-caption">Kameraflödet</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image phone">
+        <img src="scanela.2.png" alt="Scanela – receptförslag">
+      </div>
+      <span class="p-gallery-caption">Receptförslag</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image phone">
+        <img src="scanela.3.png" alt="Scanela – sparade recept">
+      </div>
+      <span class="p-gallery-caption">Sparade recept</span>
+    </div>
+  </div>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Hemsida</h2>
+  <p class="p-section-sub">Ett urval från Scanelas hemsida.</p>
+  <div class="p-gallery" style="margin-bottom:28px;">
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="scanela.hemsida.png" alt="Scanela hemsida – startsida">
+      </div>
+      <span class="p-gallery-caption">Startsidan</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="scanela.hemsida.2.png" alt="Scanela hemsida – produktvy">
+      </div>
+      <span class="p-gallery-caption">Produktvy</span>
+    </div>
+  </div>
+  <!-- Byt href till din riktiga hemsideslänk -->
+  <a class="btn primary" href="https://scanela.info" target="_blank" rel="noopener">Besök hemsidan →</a>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Tillgänglig i App Store</h2>
+  <p class="p-section-sub">Scanela finns att ladda ner för iPhone.</p>
+
+  <div class="p-gallery" style="margin-bottom:28px;">
+    <div class="p-gallery-item">
+      <div class="p-image phone">
+        <img src="appstore.scanela.png" alt="Scanela i App Store">
+      </div>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image phone">
+        <img src="appstore.scanela.2.png" alt="Scanela i App Store – recensioner">
+      </div>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image phone">
+        <img src="appstore.scanela.3.jpeg" alt="Scanela i App Store">
+      </div>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image phone">
+        <img src="appstore.scanela.4.jpeg" alt="Scanela i App Store">
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Sociala medier</h2>
+  <p class="p-section-sub">Scanela på sociala plattformar.</p>
+
+  <div class="p-gallery" style="margin-bottom:28px;">
+    <div class="p-gallery-item">
+      <div class="p-image phone">
+        <img src="scanela.tiktok.png" alt="Scanela på Instagram">
+      </div>
+      <span class="p-gallery-caption">Instagram</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image phone">
+        <img src="scanela.tiktok.2.jpeg" alt="Scanela på TikTok">
+      </div>
+      <span class="p-gallery-caption">TikTok</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image phone">
+        <img src="scanela.tiktok.3.png" alt="Scanela – statistik">
+      </div>
+      <span class="p-gallery-caption">Statistik</span>
+    </div>
+  </div>
+
+</section>
+
+<section class="p-next wrap">
+  <span class="p-next-label">Nästa projekt</span>
+  <a class="p-next-link" href="vilaventia.html">
+    <div class="p-next-title">Vilaventia — Smyckesvarumärke →</div>
+  </a>
+</section>
+
+<div class="p-footer-nav wrap">
+  <a class="back-link" href="index.html">← Tillbaka till alla projekt</a>
+</div>
+
+<footer class="wrap">
+  <span>© 2026 Belmin Music</span>
+  <span>Jönköping, Sverige</span>
+</footer>
+
+</body>
+</html>

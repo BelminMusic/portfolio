@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vilaventia — Belmin Music</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg:        #FFFFFF;
+    --ink:       #0E0E0C;
+    --ink-dim:   #75756E;
+    --line:      #ECECE6;
+
+    --blue:      #315CFF;
+    --blue-soft: #EAEEFF;
+    --coral:     #FF5A3C;
+    --coral-soft:#FFEBE5;
+    --yellow:    #FFC700;
+    --yellow-soft:#FFF6D9;
+
+    --display: 'Clash Display', 'Satoshi', sans-serif;
+    --body:    'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono:    'JetBrains Mono', monospace;
+
+    --max-w: 1160px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
+
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--body);
+    font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--yellow); color:var(--ink); }
+  :focus-visible{ outline:2px solid var(--coral); outline-offset:3px; border-radius:2px; }
+
+  .wrap{ max-width:var(--max-w); margin:0 auto; padding:0 32px; }
+
+  .mark{ display:inline-flex; align-items:flex-end; gap:3px; height:16px; width:15px; flex-shrink:0; }
+  .mark span{ display:block; width:3px; border-radius:1px; animation:pulse 1.5s ease-in-out infinite; }
+  .mark span:nth-child(1){ height:40%; background:var(--blue); animation-delay:0s; }
+  .mark span:nth-child(2){ height:100%; background:var(--coral); animation-delay:.2s; }
+  .mark span:nth-child(3){ height:65%; background:var(--yellow); animation-delay:.4s; }
+  .mark span:nth-child(4){ height:85%; background:var(--blue); animation-delay:.1s; }
+  @keyframes pulse{ 0%,100%{ transform:scaleY(.45); } 50%{ transform:scaleY(1); } }
+
+  header{ position:sticky; top:0; background:rgba(255,255,255,0.85); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); z-index:10; }
+  nav.wrap{ display:flex; align-items:center; justify-content:space-between; height:76px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:600; font-size:17px; letter-spacing:-0.01em; }
+  .back-link{
+    font-size:14px; font-weight:600; color:var(--ink-dim); display:inline-flex; align-items:center; gap:8px;
+    transition:color .15s ease, gap .15s ease;
+  }
+  .back-link:hover{ color:var(--coral); gap:11px; }
+
+  .p-hero{ padding:72px 0 48px; }
+  .p-eyebrow{
+    font-family:var(--mono); font-size:13px; color:var(--coral); text-transform:uppercase;
+    letter-spacing:.08em; margin-bottom:18px;
+  }
+  .p-title{
+    font-family:var(--display); font-weight:700; font-size:clamp(38px, 6vw, 64px);
+    letter-spacing:-0.02em; max-width:18ch; margin-bottom:24px;
+  }
+  .p-lead{ font-size:19px; line-height:1.6; color:var(--ink-dim); max-width:60ch; }
+
+  .p-meta{
+    display:flex; gap:40px; flex-wrap:wrap; margin-top:40px; padding-top:32px; border-top:1px solid var(--line);
+  }
+  .p-meta-item{ display:flex; flex-direction:column; gap:6px; }
+  .p-meta-label{ font-family:var(--mono); font-size:11.5px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.06em; }
+  .p-meta-val{ font-family:var(--display); font-weight:600; font-size:16px; }
+
+  .p-image{
+    margin:56px 0; border-radius:20px; overflow:hidden; border:1px solid var(--line);
+    background:var(--coral-soft); aspect-ratio:16/9; display:flex; align-items:center; justify-content:center;
+  }
+  .p-image img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* phone-mockup variant — for tall screenshot images like app/social screens */
+  .p-image.phone{
+    aspect-ratio: 1419/2796;
+    max-width: 240px;
+    margin-left: auto;
+    margin-right: auto;
+    background: transparent;
+    border: none;
+  }
+  .p-image.phone img{ object-fit: contain; }
+
+  /* wide variant — for product photography / website screenshots */
+  .p-image.wide{ aspect-ratio:16/10; max-width:100%; width:500px; margin:0; }
+
+  .p-section{ padding:56px 0; border-top:1px solid var(--line); }
+  .p-section-title{ font-family:var(--display); font-weight:600; font-size:clamp(24px, 3.5vw, 32px); letter-spacing:-0.01em; margin-bottom:24px; }
+  .p-section-sub{ font-size:16px; color:var(--ink-dim); max-width:64ch; margin-top:-12px; margin-bottom:32px; }
+  .p-section p{ font-size:17px; line-height:1.7; color:var(--ink-dim); max-width:64ch; }
+  .p-section p + p{ margin-top:18px; }
+
+  .p-tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top:20px; }
+  .tag{ font-family:var(--mono); font-size:12px; color:var(--ink-dim); border:1px solid var(--line); padding:5px 12px; border-radius:999px; }
+
+  /* TASKS — the different roles/responsibilities */
+  .p-tasks{ display:flex; flex-direction:column; gap:1px; background:var(--line); border-radius:20px; overflow:hidden; border:1px solid var(--line); }
+  .p-task{ background:#fff; padding:32px; display:grid; grid-template-columns:120px 1fr; gap:24px; }
+  @media (max-width:700px){ .p-task{ grid-template-columns:1fr; gap:12px; } }
+  .p-task-tag{ font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; padding-top:4px; }
+  .p-task:nth-child(1) .p-task-tag{ color:var(--coral); }
+  .p-task:nth-child(2) .p-task-tag{ color:var(--blue); }
+  .p-task:nth-child(3) .p-task-tag{ color:#B8860B; }
+  .p-task:nth-child(4) .p-task-tag{ color:var(--coral); }
+  .p-task:nth-child(5) .p-task-tag{ color:var(--blue); }
+  .p-task-title{ font-family:var(--display); font-weight:600; font-size:20px; margin-bottom:8px; }
+  .p-task-desc{ font-size:15.5px; line-height:1.65; color:var(--ink-dim); max-width:56ch; }
+
+  /* GALLERY — product photos, screenshots, phone mockups */
+  .p-gallery{ display:flex; flex-wrap:wrap; gap:32px; justify-content:center; }
+  .p-gallery-item{ display:flex; flex-direction:column; align-items:center; }
+  .p-gallery-caption{ font-family:var(--mono); font-size:12px; color:var(--ink-dim); margin-top:10px; display:block; text-align:center; }
+
+  /* highlight stat block — for the follower milestone */
+  .p-highlight{
+    padding:36px; border-radius:20px; background:var(--coral-soft);
+    display:flex; align-items:baseline; gap:20px; flex-wrap:wrap;
+  }
+  .p-highlight-num{ font-family:var(--display); font-weight:700; font-size:clamp(40px, 6vw, 56px); color:var(--coral); letter-spacing:-0.02em; }
+  .p-highlight-label{ font-family:var(--mono); font-size:13px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.05em; }
+
+  /* Social media links */
+  .social-links{ display:flex; gap:12px; flex-wrap:wrap; }
+  .social-link{
+    display:inline-flex; align-items:center; gap:8px; font-family:var(--display); font-weight:600; font-size:15px;
+    border:1.5px solid var(--ink); padding:12px 22px; border-radius:999px; transition:background .15s ease, color .15s ease, transform .15s ease;
+  }
+  .social-link:hover{ background:var(--coral); border-color:var(--coral); color:#fff; transform:translateY(-2px); }
+
+  .p-reflection{
+    padding:40px; border-radius:20px; background:var(--ink); color:#fff; margin-top:8px;
+  }
+  .p-reflection p{ font-size:18px; line-height:1.7; color:rgba(255,255,255,0.85); max-width:64ch; }
+  .p-reflection p + p{ margin-top:16px; }
+
+  .p-next{
+    padding:64px 0; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:14px;
+  }
+  .p-next-label{ font-family:var(--mono); font-size:12px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.06em; }
+  .p-next-title{
+    font-family:var(--display); font-weight:600; font-size:clamp(26px, 4vw, 38px); letter-spacing:-0.01em;
+    display:inline-flex; align-items:center; gap:14px; transition:gap .15s ease, color .15s ease;
+  }
+  .p-next-link:hover .p-next-title{ gap:20px; color:var(--coral); }
+
+  .p-footer-nav{ padding:32px 0 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .btn{
+    font-family:var(--body); font-size:15px; font-weight:600; padding:15px 28px; border-radius:999px;
+    border:1.5px solid var(--ink); transition:background .15s ease, color .15s ease, border-color .15s ease, transform .15s ease;
+    display:inline-block;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn.primary{ background:var(--coral); color:#fff; border-color:var(--coral); }
+  .btn.primary:hover{ background:var(--ink); border-color:var(--ink); }
+
+  footer{
+    padding:32px 0 48px; display:flex; justify-content:space-between; align-items:center;
+    font-family:var(--mono); font-size:12px; color:var(--ink-dim); flex-wrap:wrap; gap:12px; border-top:1px solid var(--line);
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="brand">
+      <span class="mark"><span></span><span></span><span></span><span></span></span>
+      Belmin Music
+    </div>
+    <a class="back-link" href="index.html">← Tillbaka till alla projekt</a>
+  </nav>
+</header>
+
+<section class="p-hero wrap">
+  <div class="p-eyebrow">Projekt / E-handel & varumärke</div>
+  <h1 class="p-title">Vilaventia <br>Smyckesvarumärke</h1>
+  <p class="p-lead">
+ <p class="p-lead">
+  Ett e-handelsvarumärke jag byggde från grunden, minimalistiska smycken i hög kvalitet.
+  Ett av mina affilierade Instagram konton kopplade till varumärket nådde över 368 000
+  följare innan jag sålde bolaget.
+</p>
+  </p>
+
+  <div class="p-meta">
+    <div class="p-meta-item">
+      <span class="p-meta-label">Roll</span>
+      <span class="p-meta-val">Grundare</span>
+    </div>
+    <div class="p-meta-item">
+      <span class="p-meta-label">Fokus</span>
+      <span class="p-meta-val">Varumärke, e-handel, sociala medier</span>
+    </div>
+    <div class="p-meta-item">
+      <span class="p-meta-label">Status</span>
+      <span class="p-meta-val">Grundades och såldes</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="p-image">
+    <img src="vilaventia-thumbnail.png" alt="Vilaventia – smyckesvarumärke">
+  </div>
+</div>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Utmaningen</h2>
+  <p>
+    Smyckesmarknaden online är full av varumärken som antingen är billiga och
+    massproducerade eller dyra och otillgängliga. Jag såg en lucka mittemellan:
+    minimalistiska, högkvalitativa smycken till ett rimligt pris utan att kompromissa
+    med varken design eller kvalitet.
+  </p>
+  <p>
+    Utmaningen var inte bara att skapa produkterna, utan att bygga ett varumärke från
+    noll som folk faktiskt skulle lita på och vilja vara en del av, i en bransch där
+    förtroende är avgörande för att någon ska våga handla online.
+  </p>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Om projektet</h2>
+  <p>
+    Vilaventia startade som ett eget e-handelsvarumärke inom smycken, med fokus på
+    minimalistisk design och hög kvalitet. Jag byggde upp allt från grunden bland annat varumärke,
+    produktsortiment, e-handel och den sociala medier närvaro som drev försäljningen.
+  </p>
+  <p>
+  Över tid växte ett av de affilierade Instagram kontona kopplade till varumärket till
+  en följarskara på över 368 000 personer, innan jag valde att sälja bolaget. Precis som med mina andra projekt handlade det
+    lika mycket om affärslogik som om design och vad som faktiskt får folk att vilja köpa.
+  </p>
+  <div class="p-tags">
+    <span class="tag">E-handel</span>
+    <span class="tag">Varumärkesbyggande</span>
+    <span class="tag">Social Media</span>
+  </div>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Mina uppgifter</h2>
+  <p class="p-section-sub">Som grundare ansvarade jag för hela bolaget, från idé till försäljning. Här är vad det innebar i praktiken.</p>
+  <div class="p-tasks">
+    <div class="p-task">
+      <span class="p-task-tag">Varumärke</span>
+      <div>
+        <div class="p-task-title">Varumärkesbyggande från grunden</div>
+        <div class="p-task-desc">
+          Jag tog fram namn, visuell identitet och positionering för Vilaventia — och
+          såg till att varje del av varumärket, från logotyp till förpackning, kändes
+          konsekvent och genomtänkt.
+        </div>
+      </div>
+    </div>
+    <div class="p-task">
+      <span class="p-task-tag">E-handel</span>
+      <div>
+        <div class="p-task-title">Butik, sortiment & köpupplevelse</div>
+        <div class="p-task-desc">
+          Jag byggde upp e-handelsplattformen, valde och utvecklade produktsortimentet
+          och ansvarade för att köpresan skulle kännas smidig och pålitlig från första
+          klick till levererad order.
+        </div>
+      </div>
+    </div>
+    <div class="p-task">
+      <span class="p-task-tag">Marknadsföring</span>
+      <div>
+<div class="p-task-title">Content & community på sociala medier</div>
+<div class="p-task-desc">
+  Jag drev en bredare social medier strategi kring varumärket, bland annat ett
+  affilierat konto som växte organiskt till över 368 000 följare och blev en viktig
+  drivkraft bakom försäljningen.
+</div>
+      </div>
+    </div>
+    <div class="p-task">
+      <span class="p-task-tag">Drift</span>
+      <div>
+        <div class="p-task-title">Kundservice, logistik & drift</div>
+        <div class="p-task-desc">
+          Jag ansvarade för den dagliga driften — allt från kundservice och orderhantering
+          till leverantörskontakt — och byggde upp rutiner som gjorde att verksamheten
+          kunde skalas utan att tappa kvalitet.
+        </div>
+      </div>
+    </div>
+    <div class="p-task">
+      <span class="p-task-tag">Exit</span>
+      <div>
+        <div class="p-task-title">Försäljning av bolaget</div>
+        <div class="p-task-desc">
+          När varumärket nått en stabil position och stark följarskara valde jag att
+          sälja bolaget — en process som innebar allt från värdering till förhandling
+          och överlämning till ny ägare.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Resultat</h2>
+  <div class="p-highlight">
+    <span class="p-highlight-num">368 000+</span>
+    <span class="p-highlight-label">Följare på ett affilierat Instagram konto</span>
+  </div>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Produktbilder</h2>
+  <p class="p-section-sub">Ett urval av Vilaventias produkter och varumärkesfoto.</p>
+  <div class="p-gallery">
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="vilaventia.product.1.png" alt="Vilaventia – produktfoto">
+      </div>
+      <span class="p-gallery-caption">Produktfoto</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="vilaventia.product.2.png" alt="Vilaventia – produktfoto">
+      </div>
+      <span class="p-gallery-caption">Produktfoto</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="vilaventia.product.3.png" alt="Vilaventia – produktfoto">
+      </div>
+      <span class="p-gallery-caption">förpackning</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="vilaventia.product.4.png" alt="Vilaventia – produktfoto">
+      </div>
+      <span class="p-gallery-caption">Produktfoto</span>
+    </div>
+  </div>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Hemsida</h2>
+  <p class="p-section-sub">Ett urval från Vilaventias e-handelsplattform.</p>
+  <div class="p-gallery" style="margin-bottom:28px;">
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="vilaventia.produkt.png" alt="Vilaventia hemsida – startsida">
+      </div>
+      <span class="p-gallery-caption">Startsidan</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="vilaventia.produkt2.png" alt="Vilaventia hemsida – produktvy">
+      </div>
+      <span class="p-gallery-caption"> Kollektion </span>
+    </div>
+  </div>
+      <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="vilaventia.produkt3.png" alt="Vilaventia hemsida – produktvy">
+      </div>
+      <span class="p-gallery-caption">Produktvy</span>
+    </div>
+  </div>
+  <!-- Byt href till hemsideslänken, om den fortfarande är aktiv -->
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Sociala medier</h2>
+  <p class="p-section-sub">Vilaventia på sociala plattformar.</p>
+
+  <div class="p-gallery" style="margin-bottom:28px;">
+    <div class="p-gallery-item">
+      <div class="p-image phone">
+        <img src="vs.1.jpeg" alt="Vilaventia på Instagram">
+      </div>
+      <span class="p-gallery-caption">Visual</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image phone">
+        <img src="vs.2.jpeg" alt="Vilaventia – statistik">
+      </div>
+      <span class="p-gallery-caption">Visual</span>
+    </div>
+        <div class="p-gallery-item">
+      <div class="p-image phone">
+        <img src="vs.3.png" alt="Vilaventia – statistik">
+      </div>
+      <span class="p-gallery-caption">Instagram</span>
+    </div>
+        <div class="p-gallery-item">
+      <div class="p-image phone">
+        <img src="vs.4.png" alt="Vilaventia – statistik">
+      </div>
+      <span class="p-gallery-caption">Instagram</span>
+    </div>
+  </div>
+
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Vad jag lärde mig</h2>
+  <div class="p-reflection">
+    <p>
+      Att bygga Vilaventia lärde mig hur mycket förtroende väger i e-handel, särskilt
+      inom smycken där folk vill känna sig säkra på kvaliteten innan de handlar utan
+      att ha känt produkten i handen. Varumärket och innehållet fick jobba hårt för att
+      skapa den tryggheten.
+    </p>
+    <p>
+      Det lärde mig också vad det innebär att driva ett bolag från start till exit och
+      inte bara att bygga något, utan att veta när och hur man ska lämna över det. Den
+      erfarenheten formar fortfarande hur jag tänker kring nya projekt idag.
+    </p>
+  </div>
+</section>
+
+<section class="p-next wrap">
+  <span class="p-next-label">Nästa projekt</span>
+  <a class="p-next-link" href="scanela.html">
+    <div class="p-next-title">Scanela — AI-app för recept →</div>
+  </a>
+</section>
+
+<div class="p-footer-nav wrap">
+  <a class="back-link" href="index.html">← Tillbaka till alla projekt</a>
+</div>
+
+<footer class="wrap">
+  <span>© 2026 Belmin Music</span>
+  <span>Jönköping, Sverige</span>
+</footer>
+
+</body>
+</html>
