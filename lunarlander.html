@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lunar Lander — Belmin Music</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg:        #FFFFFF;
+    --ink:       #0E0E0C;
+    --ink-dim:   #75756E;
+    --line:      #ECECE6;
+
+    --blue:      #315CFF;
+    --blue-soft: #EAEEFF;
+    --coral:     #FF5A3C;
+    --coral-soft:#FFEBE5;
+    --yellow:    #FFC700;
+    --yellow-soft:#FFF6D9;
+    --yellow-ink:#8A6A00;
+
+    --display: 'Clash Display', 'Satoshi', sans-serif;
+    --body:    'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono:    'JetBrains Mono', monospace;
+
+    --max-w: 1160px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
+
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--body);
+    font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--yellow); color:var(--ink); }
+  :focus-visible{ outline:2px solid var(--yellow-ink); outline-offset:3px; border-radius:2px; }
+
+  .wrap{ max-width:var(--max-w); margin:0 auto; padding:0 32px; }
+
+  .mark{ display:inline-flex; align-items:flex-end; gap:3px; height:16px; width:15px; flex-shrink:0; }
+  .mark span{ display:block; width:3px; border-radius:1px; animation:pulse 1.5s ease-in-out infinite; }
+  .mark span:nth-child(1){ height:40%; background:var(--blue); animation-delay:0s; }
+  .mark span:nth-child(2){ height:100%; background:var(--coral); animation-delay:.2s; }
+  .mark span:nth-child(3){ height:65%; background:var(--yellow); animation-delay:.4s; }
+  .mark span:nth-child(4){ height:85%; background:var(--blue); animation-delay:.1s; }
+  @keyframes pulse{ 0%,100%{ transform:scaleY(.45); } 50%{ transform:scaleY(1); } }
+
+  header{ position:sticky; top:0; background:rgba(255,255,255,0.85); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); z-index:10; }
+  nav.wrap{ display:flex; align-items:center; justify-content:space-between; height:76px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:600; font-size:17px; letter-spacing:-0.01em; }
+  .back-link{
+    font-size:14px; font-weight:600; color:var(--ink-dim); display:inline-flex; align-items:center; gap:8px;
+    transition:color .15s ease, gap .15s ease;
+  }
+  .back-link:hover{ color:var(--yellow-ink); gap:11px; }
+
+  .p-hero{ padding:72px 0 48px; }
+  .p-eyebrow{
+    font-family:var(--mono); font-size:13px; color:var(--yellow-ink); text-transform:uppercase;
+    letter-spacing:.08em; margin-bottom:18px;
+  }
+  .p-title{
+    font-family:var(--display); font-weight:700; font-size:clamp(38px, 6vw, 64px);
+    letter-spacing:-0.02em; max-width:18ch; margin-bottom:24px;
+  }
+  .p-lead{ font-size:19px; line-height:1.6; color:var(--ink-dim); max-width:60ch; }
+
+  .p-meta{
+    display:flex; gap:40px; flex-wrap:wrap; margin-top:40px; padding-top:32px; border-top:1px solid var(--line);
+  }
+  .p-meta-item{ display:flex; flex-direction:column; gap:6px; }
+  .p-meta-label{ font-family:var(--mono); font-size:11.5px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.06em; }
+  .p-meta-val{ font-family:var(--display); font-weight:600; font-size:16px; }
+
+  .p-image{
+    margin:56px 0; border-radius:20px; overflow:hidden; border:1px solid var(--line);
+    background:var(--yellow-soft); aspect-ratio:16/9; display:flex; align-items:center; justify-content:center;
+  }
+  .p-image img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* phone/desktop mockup variant — not used much here since it's a browser game, but kept for consistency */
+  .p-image.phone{
+    aspect-ratio: 1419/2796;
+    max-width: 240px;
+    margin-left: auto;
+    margin-right: auto;
+    background: transparent;
+    border: none;
+  }
+  .p-image.phone img{ object-fit: contain; }
+
+  /* wide variant — for gameplay screenshots */
+  .p-image.wide{ aspect-ratio:16/10; max-width:100%; width:500px; margin:0; }
+
+  .p-section{ padding:56px 0; border-top:1px solid var(--line); }
+  .p-section-title{ font-family:var(--display); font-weight:600; font-size:clamp(24px, 3.5vw, 32px); letter-spacing:-0.01em; margin-bottom:24px; }
+  .p-section-sub{ font-size:16px; color:var(--ink-dim); max-width:64ch; margin-top:-12px; margin-bottom:32px; }
+  .p-section p{ font-size:17px; line-height:1.7; color:var(--ink-dim); max-width:64ch; }
+  .p-section p + p{ margin-top:18px; }
+
+  .p-tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top:20px; }
+  .tag{ font-family:var(--mono); font-size:12px; color:var(--ink-dim); border:1px solid var(--line); padding:5px 12px; border-radius:999px; }
+
+  /* TASKS — the different roles/responsibilities */
+  .p-tasks{ display:flex; flex-direction:column; gap:1px; background:var(--line); border-radius:20px; overflow:hidden; border:1px solid var(--line); }
+  .p-task{ background:#fff; padding:32px; display:grid; grid-template-columns:120px 1fr; gap:24px; }
+  @media (max-width:700px){ .p-task{ grid-template-columns:1fr; gap:12px; } }
+  .p-task-tag{ font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; padding-top:4px; }
+  .p-task:nth-child(1) .p-task-tag{ color:var(--yellow-ink); }
+  .p-task:nth-child(2) .p-task-tag{ color:var(--blue); }
+  .p-task:nth-child(3) .p-task-tag{ color:var(--coral); }
+  .p-task:nth-child(4) .p-task-tag{ color:var(--yellow-ink); }
+  .p-task-title{ font-family:var(--display); font-weight:600; font-size:20px; margin-bottom:8px; }
+  .p-task-desc{ font-size:15.5px; line-height:1.65; color:var(--ink-dim); max-width:56ch; }
+
+  /* GALLERY — screenshots */
+  .p-gallery{ display:flex; flex-wrap:wrap; gap:32px; justify-content:center; }
+  .p-gallery-item{ display:flex; flex-direction:column; align-items:center; }
+  .p-gallery-caption{ font-family:var(--mono); font-size:12px; color:var(--ink-dim); margin-top:10px; display:block; text-align:center; }
+
+  .p-reflection{
+    padding:40px; border-radius:20px; background:var(--ink); color:#fff; margin-top:8px;
+  }
+  .p-reflection p{ font-size:18px; line-height:1.7; color:rgba(255,255,255,0.85); max-width:64ch; }
+  .p-reflection p + p{ margin-top:16px; }
+
+  .p-next{
+    padding:64px 0; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:14px;
+  }
+  .p-next-label{ font-family:var(--mono); font-size:12px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.06em; }
+  .p-next-title{
+    font-family:var(--display); font-weight:600; font-size:clamp(26px, 4vw, 38px); letter-spacing:-0.01em;
+    display:inline-flex; align-items:center; gap:14px; transition:gap .15s ease, color .15s ease;
+  }
+  .p-next-link:hover .p-next-title{ gap:20px; color:var(--yellow-ink); }
+
+  .p-footer-nav{ padding:32px 0 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .btn{
+    font-family:var(--body); font-size:15px; font-weight:600; padding:15px 28px; border-radius:999px;
+    border:1.5px solid var(--ink); transition:background .15s ease, color .15s ease, border-color .15s ease, transform .15s ease;
+    display:inline-block;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn.primary{ background:var(--yellow); color:var(--ink); border-color:var(--yellow); }
+  .btn.primary:hover{ background:var(--ink); color:#fff; border-color:var(--ink); }
+
+  footer{
+    padding:32px 0 48px; display:flex; justify-content:space-between; align-items:center;
+    font-family:var(--mono); font-size:12px; color:var(--ink-dim); flex-wrap:wrap; gap:12px; border-top:1px solid var(--line);
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="brand">
+      <span class="mark"><span></span><span></span><span></span><span></span></span>
+      Belmin Music
+    </div>
+    <a class="back-link" href="index.html">← Tillbaka till alla projekt</a>
+  </nav>
+</header>
+
+<section class="p-hero wrap">
+  <div class="p-eyebrow">Projekt / Spelutveckling</div>
+  <h1 class="p-title">Lunar Lander</h1>
+  <p class="p-lead">
+    Ett webbaserat månlandningsspel byggt med JavaScript, Canvas API och p5.js. Styr
+    thrust och bränsle för att landa säkert på månens yta innan gravitationen eller
+    bränslet tar ut sin rätt.
+  </p>
+
+  <div class="p-meta">
+    <div class="p-meta-item">
+      <span class="p-meta-label">Roll</span>
+      <span class="p-meta-val">Speldesign & utveckling</span>
+    </div>
+    <div class="p-meta-item">
+      <span class="p-meta-label">Verktyg</span>
+      <span class="p-meta-val">JavaScript, Canvas API, p5.js</span>
+    </div>
+    <div class="p-meta-item">
+      <span class="p-meta-label">Status</span>
+      <span class="p-meta-val">Skolprojekt, spelbart</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="p-image">
+    <img src="lls.th2.png" alt="Lunar Lander – gameplay">
+  </div>
+</div>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Utmaningen</h2>
+  <p>
+    Uppgiften var att bygga ett fullt fungerande spel från grunden, utan att luta sig
+    på ett färdigt spelmotor ramverk. Utmaningen låg i att själv räkna ut all fysik,
+    gravitation och kollision, samtidigt som spelet skulle kännas rättvist och roligt
+    att faktiskt spela inte bara tekniskt korrekt.
+  </p>
+  <p>
+    Målet var ett spel där varje landning känns som ett resultat av spelarens egna val,
+    inte slump, hur försiktigt man styr, hur man hushåller med bränslet och hur man
+    läser terrängen.
+  </p>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Om projektet</h2>
+  <p>
+    Lunar Lander är ett skolprojekt där jag byggde ett webbläsarspel från grunden med
+    JavaScript, Canvas API och p5.js. Spelaren styr en rymdfarkosts thrusters för att
+    motverka gravitationen och landa säkert på ojämn månterräng, med bränsle som
+    huvudsaklig begränsning.
+  </p>
+  <p>
+    Istället för att följa en mall byggde jag hela spelloopen, fysiken och renderingen
+    själv från gravitations och thrust beräkningar till kollisionsdetektering mot
+    terrängen. Resultatet är ett litet, fokuserat spel som faktiskt går att spela.
+  </p>
+  <div class="p-tags">
+    <span class="tag">JavaScript</span>
+    <span class="tag">Canvas API</span>
+    <span class="tag">p5.js</span>
+  </div>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Mina uppgifter</h2>
+  <p class="p-section-sub">Jag ansvarade för hela spelet, från koncept till spelbar version. Här är vad det innebar i praktiken.</p>
+  <div class="p-tasks">
+    <div class="p-task">
+      <span class="p-task-tag">Speldesign</span>
+      <div>
+        <div class="p-task-title">Koncept & spelregler</div>
+        <div class="p-task-desc">
+          Tolkade uppgiftsbeskrivningen och definierade kärnmekaniken: landa säkert
+          under bränsle och gravitationsbegränsningar. Designade vinst och
+          förlustvillkoren baserat på landningsvinkel, hastighet och kvarvarande bränsle.
+        </div>
+      </div>
+    </div>
+    <div class="p-task">
+      <span class="p-task-tag">Fysik</span>
+      <div>
+        <div class="p-task-title">Fysik & spellogik</div>
+        <div class="p-task-desc">
+          Implementerade gravitation, thrust och bränsleförbrukning som realtids-
+          fysikberäkningar, och byggde kollisionsdetektering mellan farkosten och
+          terrängen inklusive säkra landningar kontra krascher.
+        </div>
+      </div>
+    </div>
+    <div class="p-task">
+      <span class="p-task-tag">Utveckling</span>
+      <div>
+        <div class="p-task-title">Kod & rendering</div>
+        <div class="p-task-desc">
+          Byggde hela spelloopen, renderingen och input hanteringen med JavaScript,
+          Canvas och p5.js. Strukturerade koden så terräng, fysik och UI kunde justeras
+          oberoende av varandra vid testning.
+        </div>
+      </div>
+    </div>
+    <div class="p-task">
+      <span class="p-task-tag">Testning</span>
+      <div>
+        <div class="p-task-title">Speltestning & balansering</div>
+        <div class="p-task-desc">
+          Speltestade upprepade gånger för att justera gravitationsstyrka, bränslemängd
+          och landningstolerans för en rättvis svårighetsgrad, och justerade kontrollerna
+          baserat på hur spelet faktiskt kändes att spela.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Skärmdumpar</h2>
+  <p class="p-section-sub">Ett urval av spelet i olika skeden.</p>
+  <div class="p-gallery">
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="lls.th2.png" alt="Lunar Lander – startskärm">
+      </div>
+      <span class="p-gallery-caption">Startskärm</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="lls.44.png" alt="Lunar Lander – pågående spel">
+      </div>
+      <span class="p-gallery-caption">Pågående spel</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="lls.33.png" alt="Lunar Lander – lyckad landning">
+      </div>
+      <span class="p-gallery-caption">Lyckad landning</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="lls.22.png" alt="Lunar Lander – krasch">
+      </div>
+      <span class="p-gallery-caption">Krasch / game over</span>
+    </div>
+  </div>
+</section>
+
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Vad jag lärde mig</h2>
+  <div class="p-reflection">
+    <p>
+      Att bygga fysiken själv, utan ett färdigt spelmotor ramverk, lärde mig hur mycket
+      som ligger bakom något som känns enkelt när man spelar det. Gravitation, thrust
+      och kollision är lätta att förstå i teorin men svåra att få att kännas rättvisa
+      i praktiken.
+    </p>
+    <p>
+      Projektet visade mig också värdet av speltestning som en riktig del av processen,
+      inte ett sista steg, de flesta av mina bästa förbättringar kom från att faktiskt
+      spela spelet om och om igen, inte från att läsa koden.
+    </p>
+  </div>
+</section>
+
+<section class="p-next wrap">
+  <span class="p-next-label">Nästa projekt</span>
+  <a class="p-next-link" href="index.html#arbete">
+    <div class="p-next-title">Se alla projekt →</div>
+  </a>
+</section>
+
+<div class="p-footer-nav wrap">
+  <a class="back-link" href="index.html">← Tillbaka till alla projekt</a>
+</div>
+
+<footer class="wrap">
+  <span>© 2026 Belmin Music</span>
+  <span>Jönköping, Sverige</span>
+</footer>
+
+</body>
+</html>

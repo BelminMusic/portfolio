@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mostra — Belmin Music</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg:        #FFFFFF;
+    --ink:       #0E0E0C;
+    --ink-dim:   #75756E;
+    --line:      #ECECE6;
+
+    --blue:      #315CFF;
+    --blue-soft: #EAEEFF;
+    --coral:     #FF5A3C;
+    --coral-soft:#FFEBE5;
+    --yellow:    #FFC700;
+    --yellow-soft:#FFF6D9;
+
+    --display: 'Clash Display', 'Satoshi', sans-serif;
+    --body:    'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono:    'JetBrains Mono', monospace;
+
+    --max-w: 1160px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
+
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--body);
+    font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--yellow); color:var(--ink); }
+  :focus-visible{ outline:2px solid var(--blue); outline-offset:3px; border-radius:2px; }
+
+  .wrap{ max-width:var(--max-w); margin:0 auto; padding:0 32px; }
+
+  .mark{ display:inline-flex; align-items:flex-end; gap:3px; height:16px; width:15px; flex-shrink:0; }
+  .mark span{ display:block; width:3px; border-radius:1px; animation:pulse 1.5s ease-in-out infinite; }
+  .mark span:nth-child(1){ height:40%; background:var(--blue); animation-delay:0s; }
+  .mark span:nth-child(2){ height:100%; background:var(--coral); animation-delay:.2s; }
+  .mark span:nth-child(3){ height:65%; background:var(--yellow); animation-delay:.4s; }
+  .mark span:nth-child(4){ height:85%; background:var(--blue); animation-delay:.1s; }
+  @keyframes pulse{ 0%,100%{ transform:scaleY(.45); } 50%{ transform:scaleY(1); } }
+
+  header{ position:sticky; top:0; background:rgba(255,255,255,0.85); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); z-index:10; }
+  nav.wrap{ display:flex; align-items:center; justify-content:space-between; height:76px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:600; font-size:17px; letter-spacing:-0.01em; }
+  .back-link{
+    font-size:14px; font-weight:600; color:var(--ink-dim); display:inline-flex; align-items:center; gap:8px;
+    transition:color .15s ease, gap .15s ease;
+  }
+  .back-link:hover{ color:var(--blue); gap:11px; }
+
+  .p-hero{ padding:72px 0 48px; }
+  .p-eyebrow{
+    font-family:var(--mono); font-size:13px; color:var(--blue); text-transform:uppercase;
+    letter-spacing:.08em; margin-bottom:18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  }
+  .p-status{
+    font-family:var(--mono); font-size:11px; color:var(--ink-dim); border:1px solid var(--line);
+    padding:3px 10px; border-radius:999px; text-transform:none; letter-spacing:.02em;
+  }
+  .p-title{
+    font-family:var(--display); font-weight:700; font-size:clamp(38px, 6vw, 64px);
+    letter-spacing:-0.02em; max-width:18ch; margin-bottom:24px;
+  }
+  .p-lead{ font-size:19px; line-height:1.6; color:var(--ink-dim); max-width:60ch; }
+
+  .p-meta{
+    display:flex; gap:40px; flex-wrap:wrap; margin-top:40px; padding-top:32px; border-top:1px solid var(--line);
+  }
+  .p-meta-item{ display:flex; flex-direction:column; gap:6px; }
+  .p-meta-label{ font-family:var(--mono); font-size:11.5px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.06em; }
+  .p-meta-val{ font-family:var(--display); font-weight:600; font-size:16px; }
+
+  .p-image{
+    margin:56px 0; border-radius:20px; overflow:hidden; border:1px solid var(--line);
+    background:var(--blue-soft); aspect-ratio:16/9; display:flex; align-items:center; justify-content:center;
+  }
+  .p-image img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  .p-image.wide{ aspect-ratio:16/10; max-width:100%; width:500px; margin:0; }
+
+  .p-section{ padding:56px 0; border-top:1px solid var(--line); }
+  .p-section-title{ font-family:var(--display); font-weight:600; font-size:clamp(24px, 3.5vw, 32px); letter-spacing:-0.01em; margin-bottom:24px; }
+  .p-section-sub{ font-size:16px; color:var(--ink-dim); max-width:64ch; margin-top:-12px; margin-bottom:32px; }
+  .p-section p{ font-size:17px; line-height:1.7; color:var(--ink-dim); max-width:64ch; }
+  .p-section p + p{ margin-top:18px; }
+
+  .p-tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top:20px; }
+  .tag{ font-family:var(--mono); font-size:12px; color:var(--ink-dim); border:1px solid var(--line); padding:5px 12px; border-radius:999px; }
+
+  /* TASKS — the different roles/responsibilities */
+  .p-tasks{ display:flex; flex-direction:column; gap:1px; background:var(--line); border-radius:20px; overflow:hidden; border:1px solid var(--line); }
+  .p-task{ background:#fff; padding:32px; display:grid; grid-template-columns:120px 1fr; gap:24px; }
+  @media (max-width:700px){ .p-task{ grid-template-columns:1fr; gap:12px; } }
+  .p-task-tag{ font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; padding-top:4px; }
+  .p-task:nth-child(1) .p-task-tag{ color:var(--blue); }
+  .p-task:nth-child(2) .p-task-tag{ color:var(--coral); }
+  .p-task:nth-child(3) .p-task-tag{ color:#B8860B; }
+  .p-task-title{ font-family:var(--display); font-weight:600; font-size:20px; margin-bottom:8px; }
+  .p-task-desc{ font-size:15.5px; line-height:1.65; color:var(--ink-dim); max-width:56ch; }
+
+  /* GALLERY */
+  .p-gallery{ display:flex; flex-wrap:wrap; gap:32px; justify-content:center; }
+  .p-gallery-item{ display:flex; flex-direction:column; align-items:center; }
+  .p-gallery-caption{ font-family:var(--mono); font-size:12px; color:var(--ink-dim); margin-top:10px; display:block; text-align:center; }
+
+  /* status block for "what's next" */
+  .p-nextsteps{
+    padding:36px; border-radius:20px; background:var(--blue-soft);
+  }
+  .p-nextsteps p{ color:var(--ink-dim); }
+
+  .p-next{
+    padding:64px 0; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:14px;
+  }
+  .p-next-label{ font-family:var(--mono); font-size:12px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.06em; }
+  .p-next-title{
+    font-family:var(--display); font-weight:600; font-size:clamp(26px, 4vw, 38px); letter-spacing:-0.01em;
+    display:inline-flex; align-items:center; gap:14px; transition:gap .15s ease, color .15s ease;
+  }
+  .p-next-link:hover .p-next-title{ gap:20px; color:var(--blue); }
+
+  .p-footer-nav{ padding:32px 0 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .btn{
+    font-family:var(--body); font-size:15px; font-weight:600; padding:15px 28px; border-radius:999px;
+    border:1.5px solid var(--ink); transition:background .15s ease, color .15s ease, border-color .15s ease, transform .15s ease;
+    display:inline-block;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn.primary{ background:var(--blue); color:#fff; border-color:var(--blue); }
+  .btn.primary:hover{ background:var(--ink); border-color:var(--ink); }
+
+  footer{
+    padding:32px 0 48px; display:flex; justify-content:space-between; align-items:center;
+    font-family:var(--mono); font-size:12px; color:var(--ink-dim); flex-wrap:wrap; gap:12px; border-top:1px solid var(--line);
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="brand">
+      <span class="mark"><span></span><span></span><span></span><span></span></span>
+      Belmin Music
+    </div>
+    <a class="back-link" href="index.html">← Tillbaka till alla projekt</a>
+  </nav>
+</header>
+
+<section class="p-hero wrap">
+  <div class="p-eyebrow">
+    Projekt / Varumärke & kläder
+    <span class="p-status">Pågående</span>
+  </div>
+  <h1 class="p-title">Stari Society </h1>
+  <p class="p-lead">
+    Ett pågående t-shirtvarumärke som jag bygger från grunden, just nu i fasen för
+    varumärkesidentitet och positionering, inför lansering.
+  </p>
+
+  <div class="p-meta">
+    <div class="p-meta-item">
+      <span class="p-meta-label">Roll</span>
+      <span class="p-meta-val">Grundare · Varumärke & identitet</span>
+    </div>
+    <div class="p-meta-item">
+      <span class="p-meta-label">Verktyg</span>
+      <span class="p-meta-val">Figma, Adobe Illustrator</span>
+    </div>
+    <div class="p-meta-item">
+      <span class="p-meta-label">Status</span>
+      <span class="p-meta-val">Under utveckling</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="p-image">
+    <img src="mostra.th2.png" alt="Mostra – varumärkeskoncept">
+  </div>
+</div>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Om projektet</h2>
+  <p>
+    Stari Society är ett t-shirtvarumärke som jag bygger just nu, med fokus på att få
+    varumärkesgrunden rätt innan produktion skalas upp eller lansering sker publikt.
+    Eftersom jag redan grundat och sålt ett e-handelsvarumärke (Vilaventia) ville jag
+    den här gången tillämpa det jag lärt mig om förtroende och positionering redan
+    från start istället för att lista ut det längs vägen.
+  </p>
+  <p>
+    Projektet är just nu under aktiv utveckling: identitet, positionering och tidig
+    designriktning är definierade, medan produktsortimentet och lanseringen
+    fortfarande finslipas.
+  </p>
+  <div class="p-tags">
+    <span class="tag">Varumärke</span>
+    <span class="tag">Branding</span>
+    <span class="tag">Figma</span>
+    <span class="tag">Illustrator</span>
+  </div>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Mina uppgifter</h2>
+  <p class="p-section-sub">Så här långt är det jag som ansvarat för hela varumärkesarbetet.</p>
+  <div class="p-tasks">
+    <div class="p-task">
+      <span class="p-task-tag">Strategi</span>
+      <div>
+        <div class="p-task-title">Varumärkesstrategi & positionering</div>
+        <div class="p-task-desc">
+          Definierade vem varumärket är till för och vad som skiljer det från
+          befintliga streetwear-/klädvarumärken. Skrev varumärkets kärnberättelse
+          och röst innan jag designade några visuella element, för att förankra
+          identiteten i något verkligt.
+        </div>
+      </div>
+    </div>
+    <div class="p-task">
+      <span class="p-task-tag">Design</span>
+      <div>
+        <div class="p-task-title">Utveckling av visuell identitet</div>
+        <div class="p-task-desc">
+          Utforskade logotyp, färgpalett och typografiriktningar i Figma och
+          Illustrator. Byggde tidiga moodboards för att testa olika visuella
+          riktningar innan jag valde en väg framåt.
+        </div>
+      </div>
+    </div>
+    <div class="p-task">
+      <span class="p-task-tag">Lärdomar</span>
+      <div>
+        <div class="p-task-title">Tillämpade lärdomar från Vilaventia</div>
+        <div class="p-task-desc">
+          Använde det jag lärde mig av att bygga och sälja Vilaventia för att
+          prioritera varumärkesförtroende och konsekvens tidigare i processen, och
+          planerar lanseringsstrategin i förväg istället för att bygga den reaktivt.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Visuellt arbete</h2>
+  <p class="p-section-sub">Ett tidigt urval, moodboard och logotypsutforskning.</p>
+  <div class="p-gallery">
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="mostra1.png" alt="Mostra – moodboard">
+      </div>
+      <span class="p-gallery-caption">Grafik</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="mostra2.png" alt="Mostra – logotypsutforskning">
+      </div>
+      <span class="p-gallery-caption">Grafik</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="mostra3.png" alt="Mostra – visuellt arbete">
+      </div>
+      <span class="p-gallery-caption">Design</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="mostra4.png" alt="Mostra – visuellt arbete">
+      </div>
+      <span class="p-gallery-caption">Design</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="mostra5.png" alt="Mostra – visuellt arbete">
+      </div>
+      <span class="p-gallery-caption">Grafik</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="mostra6.png" alt="Mostra – visuellt arbete">
+      </div>
+      <span class="p-gallery-caption">Grafik</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="mostra7.png" alt="Mostra – visuellt arbete">
+      </div>
+      <span class="p-gallery-caption">Grafik</span>
+    </div>
+    <div class="p-gallery-item">
+      <div class="p-image wide">
+        <img src="mostra8.png" alt="Mostra – visuellt arbete">
+      </div>
+      <span class="p-gallery-caption">Grafik</span>
+    </div>
+  </div>
+</section>
+
+<section class="p-section wrap">
+  <h2 class="p-section-title">Vad som återstår</h2>
+  <div class="p-nextsteps">
+    <p>
+      Varumärket är fortfarande under utveckling och nästa steg innefattar att finslipa
+      produktsortimentet, ta fram de första provdesignerna och förbereda för en
+      publik lansering. Jag uppdaterar den här sidan allt eftersom projektet
+      utvecklas.
+    </p>
+  </div>
+</section>
+
+<section class="p-next wrap">
+  <span class="p-next-label">Nästa projekt</span>
+  <a class="p-next-link" href="lunarlander.html">
+    <div class="p-next-title">Lunar Lander →</div>
+  </a>
+</section>
+
+<div class="p-footer-nav wrap">
+  <a class="back-link" href="index.html">← Tillbaka till alla projekt</a>
+</div>
+
+<footer class="wrap">
+  <span>© 2026 Belmin Music</span>
+  <span>Jönköping, Sverige</span>
+</footer>
+
+</body>
+</html>
